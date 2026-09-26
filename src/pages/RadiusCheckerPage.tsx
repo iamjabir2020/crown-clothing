@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, CheckCircle, AlertCircle, Compass, Truck, Clock, ShieldCheck, Search, Navigation } from 'lucide-react';
-import { DELIVERY_ZONES } from '../data/mockData';
+import { DELIVERY_ZONES, flagshipImg } from '../data/mockData';
 import { DeliveryZone } from '../types';
 
 export const RadiusCheckerPage: React.FC = () => {
@@ -261,6 +261,20 @@ export const RadiusCheckerPage: React.FC = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-xs border border-slate-200">
+            <img
+              src={flagshipImg}
+              alt="Crown Clothing Flagship Salon Hub"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+            <div className="absolute bottom-3 left-4 right-4 text-white text-xs">
+              <span className="font-semibold block">Central Dispatch Hub #01 — Regent Street</span>
+              <span className="text-[11px] text-slate-300">Origin point for all 2-hour electric courier routes</span>
             </div>
           </div>
 

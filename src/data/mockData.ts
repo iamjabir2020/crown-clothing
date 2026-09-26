@@ -5,8 +5,24 @@ import overcoatImg from '../assets/images/product_tailored_overcoat_179041738496
 import silkDressImg from '../assets/images/product_silk_dress_1790417400989.jpg';
 import merinoKnitImg from '../assets/images/product_merino_knitwear_1790417419287.jpg';
 import courierFleetImg from '../assets/images/courier_fleet_tracking_1790417434344.jpg';
+import bespokeSuitImg from '../assets/images/product_bespoke_suit_1790419434059.jpg';
+import empressCapeImg from '../assets/images/product_empress_cape_1790419446512.jpg';
+import silkScarfImg from '../assets/images/product_silk_scarf_1790419461191.jpg';
+import craftsmanshipImg from '../assets/images/craftsmanship_atelier_1790419480360.jpg';
+import flagshipImg from '../assets/images/flagship_boutique_1790419496331.jpg';
 
-export { heroFashionImg, overcoatImg, silkDressImg, merinoKnitImg, courierFleetImg };
+export {
+  heroFashionImg,
+  overcoatImg,
+  silkDressImg,
+  merinoKnitImg,
+  courierFleetImg,
+  bespokeSuitImg,
+  empressCapeImg,
+  silkScarfImg,
+  craftsmanshipImg,
+  flagshipImg,
+};
 
 export const PRODUCTS: Product[] = [
   {
@@ -85,8 +101,8 @@ export const PRODUCTS: Product[] = [
     category: 'Tailoring',
     gender: 'Men',
     price: 1250,
-    image: overcoatImg,
-    secondaryImage: heroFashionImg,
+    image: bespokeSuitImg,
+    secondaryImage: overcoatImg,
     description: 'Woven in Biella, Italy from 100% Super 150s worsted wool. Features a half-canvas construction that contours to your body over time, pick-stitched peak lapels, and side adjusters on flat-front trousers.',
     composition: '100% Super 150s Italian Worsted Wool. Horn buttons.',
     fit: 'Modern tailored cut. Light chest canvas with natural drape.',
@@ -107,8 +123,8 @@ export const PRODUCTS: Product[] = [
     category: 'Outerwear',
     gender: 'Women',
     price: 780,
-    image: silkDressImg,
-    secondaryImage: merinoKnitImg,
+    image: empressCapeImg,
+    secondaryImage: silkDressImg,
     description: 'A regal silhouette tailored with a structured high collar, hidden front placket, and hand-embroidered crest monogram inside the lapel facing.',
     composition: '75% Wool, 25% Cashmere.',
     fit: 'Generous architectural sweep with belted interior harness.',
@@ -128,8 +144,8 @@ export const PRODUCTS: Product[] = [
     category: 'Accessories',
     gender: 'Unisex',
     price: 195,
-    image: merinoKnitImg,
-    secondaryImage: silkDressImg,
+    image: silkScarfImg,
+    secondaryImage: merinoKnitImg,
     description: 'Printed in Lake Como on heavyweight 16mm silk twill with hand-rolled and hand-sewn edges. Features the historical Crown fleur-de-lis geometric tapestry motif.',
     composition: '100% Italian Silk Twill. Hand-rolled hems.',
     fit: '90cm x 90cm square grand format.',

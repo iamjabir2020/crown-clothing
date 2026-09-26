@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, ShieldCheck, Truck, Sparkles, ChevronRight, Award, Compass, MapPin } from 'lucide-react';
 import { Product } from '../types';
 import { ProductCard } from '../components/ProductCard';
-import { heroFashionImg, courierFleetImg } from '../data/mockData';
+import { heroFashionImg, courierFleetImg, craftsmanshipImg } from '../data/mockData';
 
 interface HomePageProps {
   products: Product[];
@@ -311,8 +311,8 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <div className="relative aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-slate-200">
             <img
-              src={products[0]?.image}
-              alt="Cashmere Tailoring Detail"
+              src={craftsmanshipImg}
+              alt="Savile Row Master Tailor at Work"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
             />

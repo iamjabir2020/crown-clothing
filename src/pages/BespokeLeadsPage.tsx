@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Award, Calendar, Clock, CheckCircle2, UserCheck, ShieldCheck, Sparkles, MapPin } from 'lucide-react';
 import { BespokeLead } from '../types';
+import { craftsmanshipImg } from '../data/mockData';
 
 interface BespokeLeadsPageProps {
   onAddLead: (lead: BespokeLead) => void;
@@ -233,6 +234,24 @@ export const BespokeLeadsPage: React.FC<BespokeLeadsPageProps> = ({ onAddLead, o
 
         {/* Right Column: Master Tailor Heritage & Fabric Vault */}
         <div className="lg:col-span-5 space-y-6">
+          <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+            <img
+              src={craftsmanshipImg}
+              alt="Master Tailor at Savile Row Atelier"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+            <div className="absolute bottom-3.5 left-4 right-4 text-white">
+              <span className="text-[10px] uppercase tracking-widest text-rose-400 font-semibold block">
+                Regent Street Cutting Room
+              </span>
+              <span className="text-xs font-serif-luxury font-medium">
+                Hand-cut anatomical patterns drafted for every client
+              </span>
+            </div>
+          </div>
+
           <div className="p-6 bg-slate-950 text-white rounded-2xl border border-slate-800 shadow-xl space-y-4">
             <span className="text-[10px] uppercase tracking-widest text-rose-400 font-semibold block">
               Savile Row Legacy
