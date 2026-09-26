@@ -1,0 +1,6 @@
+{
+  "name": "Crown Clothing — Royal Heritage & Bespoke Apparel",
+  "description": "Luxury apparel, bespoke tailoring, live courier delivery tracking, delivery radius engine, and store operations console.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

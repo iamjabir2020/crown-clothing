@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Garment item in the Crown Clothing royal catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique product ID" },
+        "name": { "type": "string", "description": "Product display title" },
+        "category": { "type": "string", "description": "Category name" },
+        "gender": { "type": "string", "description": "Gender demographic" },
+        "price": { "type": "number", "description": "Price in USD" },
+        "originalPrice": { "type": "number", "description": "Original price if discounted" },
+        "image": { "type": "string", "description": "Primary product image URL" },
+        "secondaryImage": { "type": "string", "description": "Secondary hover image URL" },
+        "description": { "type": "string", "description": "Garment description and craftsmanship details" },
+        "composition": { "type": "string", "description": "Fabric material breakdown" },
+        "fit": { "type": "string", "description": "Silhouette and sizing fit notes" },
+        "colors": { "type": "array", "description": "Available color variants" },
+        "sizes": { "type": "array", "description": "Available size options" },
+        "inStock": { "type": "boolean", "description": "Stock status availability" },
+        "stockCount": { "type": "number", "description": "Available inventory units in atelier" },
+        "rating": { "type": "number", "description": "Average review score" },
+        "reviewCount": { "type": "number", "description": "Number of verified reviews" },
+        "isNew": { "type": "boolean", "description": "Flag for new season capsule" },
+        "isBestseller": { "type": "boolean", "description": "Flag for best-selling signature pieces" }
+      },
+      "required": ["id", "name", "category", "price", "stockCount"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase and live courier dispatch telemetry",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "description": "Unique Order ID (e.g. CRW-88219)" },
+        "customerName": { "type": "string", "description": "Full name of recipient" },
+        "customerPhone": { "type": "string", "description": "Contact phone number" },
+        "deliveryAddress": { "type": "string", "description": "Street address" },
+        "deliveryCity": { "type": "string", "description": "City" },
+        "postalCode": { "type": "string", "description": "Postal or zip code" },
+        "status": { "type": "string", "description": "Current pipeline status" },
+        "estimatedDelivery": { "type": "string", "description": "ETA string" },
+        "courierName": { "type": "string", "description": "Assigned courier driver name" },
+        "courierId": { "type": "string", "description": "Courier license or ID" },
+        "courierPhone": { "type": "string", "description": "Courier contact number" },
+        "courierVehicle": { "type": "string", "description": "Electric fleet van model" },
+        "courierCoords": { "type": "object", "description": "GPS latitude and longitude" },
+        "destinationCoords": { "type": "object", "description": "Destination latitude and longitude" },
+        "routeProgressPercent": { "type": "number", "description": "Transit completion percentage" },
+        "items": { "type": "array", "description": "List of ordered items" },
+        "subtotal": { "type": "number", "description": "Subtotal before shipping and promo" },
+        "shippingFee": { "type": "number", "description": "Courier delivery fee" },
+        "total": { "type": "number", "description": "Grand total paid or due" },
+        "paymentMethod": { "type": "string", "description": "Credit Card, Apple Pay, or Cash on Delivery" },
+        "createdAt": { "type": "string", "description": "Order creation timestamp" },
+        "timeline": { "type": "array", "description": "Stage progression history" }
+      },
+      "required": ["orderId", "customerName", "deliveryAddress", "status", "total", "paymentMethod"]
+    },
+    "BespokeLead": {
+      "title": "BespokeLead",
+      "description": "VIP private tailoring or consultation dossier",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique inquiry dossier ID" },
+        "fullName": { "type": "string", "description": "Client full name" },
+        "email": { "type": "string", "description": "Client email" },
+        "phone": { "type": "string", "description": "Client phone" },
+        "serviceType": { "type": "string", "description": "Tailoring discipline requested" },
+        "preferredDate": { "type": "string", "description": "Target fitting date" },
+        "notes": { "type": "string", "description": "Client preferences, monogramming, fabric notes" },
+        "status": { "type": "string", "description": "Dossier review status" },
+        "createdAt": { "type": "string", "description": "Submission timestamp" }
+      },
+      "required": ["id", "fullName", "email", "phone", "serviceType", "status"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Crown Clothing apparel items and inventory levels"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Purchased customer orders and courier transit telemetry"
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/BespokeLead" },
+      "description": "VIP bespoke tailoring consultation requests"
+    }
+  }
+}
