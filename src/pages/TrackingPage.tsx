@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Truck, Phone, MessageSquare, MapPin, CheckCircle2, Clock, ShieldCheck, ChevronRight, Navigation, RefreshCw, X, Send } from 'lucide-react';
 import { OrderTelemetry, OrderStatus } from '../types';
+import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
 
 interface TrackingPageProps {
   orders: OrderTelemetry[];
@@ -486,10 +487,11 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
               {currentOrder.items.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 pb-3 border-b border-slate-100 last:border-0 last:pb-0">
                   <img
-                    src={item.product.image}
+                    src={resolveImageUrl(item.product.image, item.product.id)}
                     alt={item.product.name}
+                    loading="lazy"
+                    onError={(e) => handleImageError(e, resolveImageUrl(undefined, item.product.id))}
                     className="w-12 h-14 object-cover rounded-lg bg-slate-100 shrink-0 border border-slate-200"
-                    referrerPolicy="no-referrer"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-bold text-slate-900 line-clamp-1">

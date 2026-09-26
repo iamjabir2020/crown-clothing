@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Star, ShieldCheck, Truck, RotateCcw, Ruler, Check, Plus, Minus } from 'lucide-react';
 import { Product } from '../types';
+import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
 
 interface ProductModalProps {
   product: Product | null;
@@ -23,9 +24,18 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [activeTab, setActiveTab] = useState<'fabric' | 'sizing' | 'delivery'>('fabric');
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [addedNotice, setAddedNotice] = useState(false);
-  const [currentImage, setCurrentImage] = useState(product.image);
+  const resolvedMainImage = resolveImageUrl(product.image, product.id);
+  const resolvedSecondaryImage = product.secondaryImage
+    ? resolveImageUrl(product.secondaryImage, product.id, true)
+    : undefined;
 
-  const images = [product.image, ...(product.secondaryImage ? [product.secondaryImage] : [])];
+  const [currentImage, setCurrentImage] = useState(resolvedMainImage);
+
+  useEffect(() => {
+    setCurrentImage(resolvedMainImage);
+  }, [product?.id, resolvedMainImage]);
+
+  const images = [resolvedMainImage, ...(resolvedSecondaryImage ? [resolvedSecondaryImage] : [])];
 
   const handleAdd = () => {
     onAddToCart(product, selectedColor, selectedSize, quantity);
@@ -65,7 +75,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <img
                 src={currentImage}
                 alt={product.name}
-                referrerPolicy="no-referrer"
+                onError={(e) => handleImageError(e, resolvedMainImage)}
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-3 left-3 text-[11px] font-semibold uppercase tracking-wider bg-white/90 backdrop-blur-md px-2.5 py-1 rounded text-slate-900">
@@ -83,7 +93,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       currentImage === img ? 'border-rose-600 ring-2 ring-rose-200' : 'border-transparent opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt="Thumbnail"
+                      onError={(e) => handleImageError(e, resolvedMainImage)}
+                      className="w-full h-full object-cover"
+                    />
                   </button>
                 ))}
               </div>

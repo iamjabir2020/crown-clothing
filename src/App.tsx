@@ -13,6 +13,7 @@ import { RadiusCheckerPage } from './pages/RadiusCheckerPage';
 import { BespokeLeadsPage } from './pages/BespokeLeadsPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { Search, X, ArrowRight } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from './utils/imageResolver';
 import {
   ensureAuth,
   subscribeProducts,
@@ -425,10 +426,11 @@ export default function App() {
                     >
                       <div className="flex items-center gap-3">
                         <img
-                          src={product.image}
+                          src={resolveImageUrl(product.image, product.id)}
                           alt={product.name}
+                          loading="lazy"
+                          onError={(e) => handleImageError(e, resolveImageUrl(undefined, product.id))}
                           className="w-10 h-12 object-cover rounded-lg bg-slate-100 border border-slate-200"
-                          referrerPolicy="no-referrer"
                         />
                         <div>
                           <h4 className="text-xs font-bold text-slate-900">{product.name}</h4>

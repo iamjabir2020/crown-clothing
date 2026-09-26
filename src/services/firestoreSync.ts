@@ -11,6 +11,7 @@ import { signInAnonymously, onAuthStateChanged, User } from 'firebase/auth';
 import { db, auth } from '../lib/firebase';
 import { Product, OrderTelemetry, BespokeLead, OrderStatus } from '../types';
 import { PRODUCTS, INITIAL_ORDERS, INITIAL_LEADS } from '../data/mockData';
+import { resolveImageUrl } from '../utils/imageResolver';
 
 // Ensure anonymous auth for security rules if needed
 let currentUser: User | null = null;
@@ -54,7 +55,14 @@ export const subscribeProducts = (onUpdate: (products: Product[]) => void) => {
       } else {
         const loaded: Product[] = [];
         snapshot.forEach((d) => {
-          loaded.push(d.data() as Product);
+          const raw = d.data() as Product;
+          loaded.push({
+            ...raw,
+            image: resolveImageUrl(raw.image, raw.id),
+            secondaryImage: raw.secondaryImage
+              ? resolveImageUrl(raw.secondaryImage, raw.id, true)
+              : resolveImageUrl(raw.image, raw.id, true),
+          });
         });
         onUpdate(loaded);
       }
@@ -92,7 +100,21 @@ export const subscribeOrders = (onUpdate: (orders: OrderTelemetry[]) => void) =>
       } else {
         const loaded: OrderTelemetry[] = [];
         snapshot.forEach((d) => {
-          loaded.push(d.data() as OrderTelemetry);
+          const raw = d.data() as OrderTelemetry;
+          const normalizedItems = Array.isArray(raw.items)
+            ? raw.items.map((item) => ({
+                ...item,
+                product: {
+                  ...item.product,
+                  image: resolveImageUrl(item.product?.image, item.product?.id),
+                },
+              }))
+            : raw.items;
+
+          loaded.push({
+            ...raw,
+            items: normalizedItems,
+          });
         });
         // Sort newest first
         onUpdate(loaded);

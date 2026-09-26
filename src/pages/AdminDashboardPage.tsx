@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DollarSign, Truck, Package, Users, ShieldAlert, ArrowUpRight, CheckCircle2, Clock, AlertTriangle, RefreshCw, Plus, Minus, Search, Database, Copy, Check, Download, FileCode } from 'lucide-react';
 import { OrderTelemetry, Product, BespokeLead, OrderStatus } from '../types';
 import { SCHEMA_SQL_CODE } from '../data/schemaSql';
+import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
 
 interface AdminDashboardPageProps {
   orders: OrderTelemetry[];
@@ -331,10 +332,11 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
                         <td className="p-4">
                           <div className="flex items-center gap-3">
                             <img
-                              src={product.image}
+                              src={resolveImageUrl(product.image, product.id)}
                               alt={product.name}
+                              loading="lazy"
+                              onError={(e) => handleImageError(e, resolveImageUrl(undefined, product.id))}
                               className="w-10 h-12 object-cover rounded-lg bg-slate-100 border border-slate-200"
-                              referrerPolicy="no-referrer"
                             />
                             <div>
                               <div className="font-semibold text-slate-900">{product.name}</div>

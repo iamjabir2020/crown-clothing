@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, CheckCircle, AlertCircle, Compass, Truck, Clock, ShieldCheck, Search, Navigation } from 'lucide-react';
 import { DELIVERY_ZONES, flagshipImg } from '../data/mockData';
 import { DeliveryZone } from '../types';
+import { handleImageError } from '../utils/imageResolver';
 
 export const RadiusCheckerPage: React.FC = () => {
   const [zipInput, setZipInput] = useState('');
@@ -268,7 +269,8 @@ export const RadiusCheckerPage: React.FC = () => {
             <img
               src={flagshipImg}
               alt="Crown Clothing Flagship Salon Hub"
-              referrerPolicy="no-referrer"
+              loading="lazy"
+              onError={(e) => handleImageError(e, flagshipImg)}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />

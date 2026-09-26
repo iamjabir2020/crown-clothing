@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, Plus, Check } from 'lucide-react';
 import { Product } from '../types';
+import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
 
 interface ProductCardProps {
   product: Product;
@@ -35,9 +36,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Image Slot */}
       <div className="relative aspect-[3/4] w-full bg-slate-100 overflow-hidden">
         <img
-          src={isHovered && product.secondaryImage ? product.secondaryImage : product.image}
+          src={resolveImageUrl(
+            isHovered && product.secondaryImage ? product.secondaryImage : product.image,
+            product.id,
+            Boolean(isHovered && product.secondaryImage)
+          )}
           alt={product.name}
-          referrerPolicy="no-referrer"
+          loading="lazy"
+          onError={(e) => handleImageError(e, resolveImageUrl(undefined, product.id))}
           className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
         />
 

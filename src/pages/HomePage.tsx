@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, Truck, Sparkles, ChevronRight, Award, Compass,
 import { Product } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { heroFashionImg, courierFleetImg, craftsmanshipImg } from '../data/mockData';
+import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
 
 interface HomePageProps {
   products: Product[];
@@ -28,7 +29,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <img
             src={heroFashionImg}
             alt="Crown Clothing Autumn Sovereign Campaign"
-            referrerPolicy="no-referrer"
+            onError={(e) => handleImageError(e, heroFashionImg)}
             className="w-full h-full object-cover object-center opacity-65 scale-100 transition-transform duration-1000"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent" />
@@ -127,10 +128,34 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { title: 'Outerwear & Overcoats', desc: 'Dense 620gsm Scottish wool & cashmere', filter: 'Outerwear', image: products[0]?.image },
-            { title: 'Bespoke Tailoring', desc: 'Half-canvas Super 150s Italian worsted suits', filter: 'Tailoring', image: products[3]?.image },
-            { title: 'Pure Silk Eveningwear', desc: 'Grade 6A Mulberry silk charmeuse gowns', filter: 'Dresses', image: products[1]?.image },
-            { title: 'Heritage Knitwear', desc: '19.5-micron fine-gauge merino wool', filter: 'Knitwear', image: products[2]?.image },
+            {
+              title: 'Outerwear & Overcoats',
+              desc: 'Dense 620gsm Scottish wool & cashmere',
+              filter: 'Outerwear',
+              image: resolveImageUrl(products[0]?.image, 'crw-01'),
+              productId: 'crw-01',
+            },
+            {
+              title: 'Bespoke Tailoring',
+              desc: 'Half-canvas Super 150s Italian worsted suits',
+              filter: 'Tailoring',
+              image: resolveImageUrl(products[3]?.image, 'crw-04'),
+              productId: 'crw-04',
+            },
+            {
+              title: 'Pure Silk Eveningwear',
+              desc: 'Grade 6A Mulberry silk charmeuse gowns',
+              filter: 'Dresses',
+              image: resolveImageUrl(products[1]?.image, 'crw-02'),
+              productId: 'crw-02',
+            },
+            {
+              title: 'Heritage Knitwear',
+              desc: '19.5-micron fine-gauge merino wool',
+              filter: 'Knitwear',
+              image: resolveImageUrl(products[2]?.image, 'crw-03'),
+              productId: 'crw-03',
+            },
           ].map((cat) => (
             <div
               key={cat.title}
@@ -140,7 +165,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               <img
                 src={cat.image}
                 alt={cat.title}
-                referrerPolicy="no-referrer"
+                loading="lazy"
+                onError={(e) => handleImageError(e, resolveImageUrl(undefined, cat.productId))}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
@@ -251,7 +277,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <img
               src={courierFleetImg}
               alt="Crown Clothing Electric Courier Van"
-              referrerPolicy="no-referrer"
+              loading="lazy"
+              onError={(e) => handleImageError(e, courierFleetImg)}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden" />
@@ -313,7 +340,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <img
               src={craftsmanshipImg}
               alt="Savile Row Master Tailor at Work"
-              referrerPolicy="no-referrer"
+              loading="lazy"
+              onError={(e) => handleImageError(e, craftsmanshipImg)}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />

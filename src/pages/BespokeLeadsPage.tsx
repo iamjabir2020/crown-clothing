@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Award, Calendar, Clock, CheckCircle2, UserCheck, ShieldCheck, Sparkles, MapPin } from 'lucide-react';
 import { BespokeLead } from '../types';
 import { craftsmanshipImg } from '../data/mockData';
+import { handleImageError } from '../utils/imageResolver';
 
 interface BespokeLeadsPageProps {
   onAddLead: (lead: BespokeLead) => void;
@@ -238,7 +239,8 @@ export const BespokeLeadsPage: React.FC<BespokeLeadsPageProps> = ({ onAddLead, o
             <img
               src={craftsmanshipImg}
               alt="Master Tailor at Savile Row Atelier"
-              referrerPolicy="no-referrer"
+              loading="lazy"
+              onError={(e) => handleImageError(e, craftsmanshipImg)}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
