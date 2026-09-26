@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Star, ShieldCheck, Truck, RotateCcw, Ruler, Check, Plus, Minus } from 'lucide-react';
 import { Product } from '../types';
 import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
+import { formatINR, getMonthlyEMI } from '../utils/currency';
 
 interface ProductModalProps {
   product: Product | null;
@@ -123,19 +124,26 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   {product.name}
                 </h2>
 
-                <div className="flex items-baseline gap-3 mt-2">
-                  <span className="text-2xl font-bold text-slate-950 tabular-nums">
-                    ${product.price.toLocaleString()}
+                <div className="flex flex-wrap items-baseline gap-3 mt-2">
+                  <span className="text-2xl font-bold text-slate-950 tabular-nums font-sans">
+                    {formatINR(product.price)}
                   </span>
                   {product.originalPrice && (
-                    <span className="text-sm text-slate-400 line-through tabular-nums">
-                      ${product.originalPrice}
+                    <span className="text-sm text-slate-400 line-through tabular-nums font-sans">
+                      {formatINR(product.originalPrice)}
                     </span>
                   )}
-                  <span className="text-xs text-emerald-700 font-medium">
-                    · Complimentary Royal Courier
+                  <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">
+                    Complimentary White-Glove Courier Across India
                   </span>
                 </div>
+
+                {product.price >= 30000 && (
+                  <div className="text-xs text-amber-800 bg-amber-50/70 border border-amber-200/80 rounded-lg px-3 py-1.5 mt-2 flex items-center justify-between">
+                    <span>No-Cost EMI available from <strong className="font-semibold">{getMonthlyEMI(product.price, 6)}</strong></span>
+                    <span className="text-[11px] text-amber-700 underline cursor-pointer">View Plans</span>
+                  </div>
+                )}
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">

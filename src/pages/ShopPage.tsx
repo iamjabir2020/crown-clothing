@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Filter, Search, SlidersHorizontal, RotateCcw, Check, Sparkles } from 'lucide-react';
 import { Product, ProductCategory, GenderCategory } from '../types';
 import { ProductCard } from '../components/ProductCard';
+import { formatINR } from '../utils/currency';
 
 interface ShopPageProps {
   products: Product[];
@@ -19,7 +20,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('All');
   const [selectedGender, setSelectedGender] = useState<GenderCategory>('All');
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-  const [maxPrice, setMaxPrice] = useState<number>(1500);
+  const [maxPrice, setMaxPrice] = useState<number>(150000);
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
@@ -56,7 +57,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     setSelectedCategory('All');
     setSelectedGender('All');
     setSearchQuery('');
-    setMaxPrice(1500);
+    setMaxPrice(150000);
     setOnlyInStock(false);
     setSortBy('featured');
   };
@@ -73,7 +74,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
             The Sovereign Wardrobe Collection
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
-            Bespoke tailoring, cashmere outerwear, and pure silk apparel crafted to the highest Savile Row specifications.
+            Bespoke tailoring, royal bandhgalas, Scottish cashmere outerwear, and pure mulberry silk apparel crafted to imperial specifications.
           </p>
         </div>
 
@@ -123,7 +124,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search garments, cashmere, wool, silk..."
+              placeholder="Search cashmere, silk, bandhgala, suits..."
               className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-rose-500 focus:bg-white"
             />
             {searchQuery && (
@@ -158,15 +159,15 @@ export const ShopPage: React.FC<ShopPageProps> = ({
             <span className="text-[11px] text-slate-500 whitespace-nowrap">Max:</span>
             <input
               type="range"
-              min="150"
-              max="1500"
-              step="50"
+              min="10000"
+              max="150000"
+              step="5000"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-full accent-rose-600 cursor-pointer"
             />
-            <span className="text-xs font-mono font-bold text-slate-900 w-12 text-right tabular-nums">
-              ${maxPrice}
+            <span className="text-xs font-mono font-bold text-slate-900 whitespace-nowrap text-right tabular-nums">
+              {formatINR(maxPrice)}
             </span>
           </div>
 
@@ -180,7 +181,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               <option value="featured">Featured Pieces</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
+              <option value="rating">Connoisseur Rating</option>
             </select>
           </div>
         </div>

@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <h4 className="text-white text-sm font-semibold mb-1">Royal Courier Fleet</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Same-day white-glove direct delivery inside our metropolitan radius.
+              Same-day white-glove direct delivery inside Mumbai, Delhi NCR, Bengaluru & Hyderabad metro perimeters.
             </p>
           </div>
         </div>
@@ -41,9 +41,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <Award className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-white text-sm font-semibold mb-1">Savile Row Heritage</h4>
+            <h4 className="text-white text-sm font-semibold mb-1">Royal Darbar Heritage</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Super 150s worsted wool and Inner Mongolian cashmere verified yarns.
+              Super 150s worsted wool, pure Grade 6A Mulberry silk, and certified Himalayan Pashmina cashmere.
             </p>
           </div>
         </div>
@@ -53,9 +53,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-white text-sm font-semibold mb-1">Secured Payments</h4>
+            <h4 className="text-white text-sm font-semibold mb-1">UPI & Secured Payments</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Encrypted card processing & Cash on Delivery (COD) with verification.
+              Instant UPI (GPay/PhonePe), NetBanking, RuPay & Pay on Delivery (COD) with tamper-proof security.
             </p>
           </div>
         </div>
@@ -65,9 +65,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <RotateCcw className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-white text-sm font-semibold mb-1">Complimentary Returns</h4>
+            <h4 className="text-white text-sm font-semibold mb-1">Complimentary Doorstep Trial</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              30-day doorstep courier collection with tamper-proof return seals.
+              Doorstep trial upon courier arrival with complimentary return collection and zero restocking fees.
             </p>
           </div>
         </div>
@@ -78,11 +78,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="md:col-span-4 space-y-4">
           <CrownLogo size="md" lightMode={true} />
           <p className="text-sm text-slate-400 leading-relaxed max-w-sm mt-4">
-            Founded with uncompromising reverence for bespoke craftsmanship and timeless silhouettes. Dedicated to dressing monarchs, leaders, and connoisseurs of fine garments since 1924.
+            Founded with uncompromising reverence for bespoke tailoring, royal heritage, and timeless silhouettes. Dedicated to dressing royalty, industrialists, and connoisseurs of fine craftsmanship across India since 1924.
           </p>
           <div className="pt-2">
-            <span className="text-xs text-slate-500 uppercase tracking-widest block font-medium">Flagship Atelier</span>
-            <span className="text-xs text-slate-300">42 Regent Street & 18 Grosvenor Terrace</span>
+            <span className="text-xs text-slate-500 uppercase tracking-widest block font-medium">Flagship Ateliers</span>
+            <span className="text-xs text-slate-300">Colaba Flagship (Mumbai) · Mehrauli Couture District (Delhi NCR) · UB City (Bengaluru)</span>
           </div>
         </div>
 
@@ -189,12 +189,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
         <div>
-          © 2026 Crown Clothing Guild Ltd. All rights reserved. Sovereign Royal Warrant holder.
+          © 2026 Crown Clothing India Pvt. Ltd. All rights reserved. Prices in INR (₹) inclusive of GST.
         </div>
         <div className="flex items-center gap-6">
           <span className="hover:text-slate-400 cursor-pointer">Privacy Charter</span>
           <span className="hover:text-slate-400 cursor-pointer">Terms of Heritage</span>
           <span className="hover:text-slate-400 cursor-pointer">Bespoke Protocol</span>
+          <span className="hover:text-slate-400 cursor-pointer">GST Compliance</span>
         </div>
       </div>
     </footer>

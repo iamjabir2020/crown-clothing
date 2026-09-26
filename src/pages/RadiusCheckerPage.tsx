@@ -12,7 +12,7 @@ export const RadiusCheckerPage: React.FC = () => {
     zone?: DeliveryZone;
     message: string;
   } | null>(null);
-  const [simulatedRadius, setSimulatedRadius] = useState<number>(15);
+  const [simulatedRadius, setSimulatedRadius] = useState<number>(18);
 
   const handleCheck = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +20,9 @@ export const RadiusCheckerPage: React.FC = () => {
 
     const query = zipInput.trim().toUpperCase();
     const matched = DELIVERY_ZONES.find((z) =>
-      query.startsWith(z.zipCodePrefix) || z.zoneName.toLowerCase().includes(query.toLowerCase())
+      query.startsWith(z.zipCodePrefix) ||
+      z.zoneName.toLowerCase().includes(query.toLowerCase()) ||
+      (z.city && z.city.toLowerCase().includes(query.toLowerCase()))
     );
 
     if (matched) {
@@ -28,13 +30,13 @@ export const RadiusCheckerPage: React.FC = () => {
         tested: true,
         eligible: true,
         zone: matched,
-        message: `Royal Same-Day Express Delivery Confirmed! Your address is located within ${matched.radiusMiles} miles of our Flagship Hub (${matched.zoneName}).`,
+        message: `Royal Same-Day Express Delivery Confirmed! Your address is located within ${matched.radiusKm || 15} km of our Flagship Hub (${matched.zoneName}).`,
       });
     } else {
       setCheckResult({
         tested: true,
         eligible: false,
-        message: `Your location is outside our 15-mile Same-Day Royal Express perimeter. White-Glove Next-Day courier and complimentary ground transit are available.`,
+        message: `Your location is outside our 18-km Same-Day Royal Express perimeter. Priority Air Courier (1-2 business days) with complimentary white-glove handover is active for your pincode.`,
       });
     }
   };
@@ -45,9 +47,9 @@ export const RadiusCheckerPage: React.FC = () => {
       tested: true,
       eligible: true,
       zone,
-      message: `Royal Same-Day Express Delivery Confirmed! Your address is located within ${zone.radiusMiles} miles of our Flagship Hub (${zone.zoneName}).`,
+      message: `Royal Same-Day Express Delivery Confirmed! Your address is located within ${zone.radiusKm || 15} km of our Flagship Hub (${zone.zoneName}).`,
     });
-    setSimulatedRadius(Math.max(zone.radiusMiles, 5));
+    setSimulatedRadius(Math.max(zone.radiusKm || 12, 6));
   };
 
   return (
@@ -57,20 +59,20 @@ export const RadiusCheckerPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-sky-600 mb-1">
             <Compass className="w-4 h-4" />
-            <span>Geospatial Logistics Radius Engine</span>
+            <span>Pan-India Geospatial Logistics Engine</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 font-display">
             Delivery Radius & Service Zones
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
-            Verify real-time eligibility for our zero-emission electric courier fleet and same-day direct wardrobe delivery.
+            Verify real-time eligibility for our zero-emission electric courier fleet and same-day direct wardrobe delivery across Indian metros.
           </p>
         </div>
 
         <div className="flex items-center gap-3 text-xs">
           <div className="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg flex items-center gap-1.5 font-medium">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>All 8 Royal Electric Couriers Online</span>
+            <span>All 8 Royal Electric Couriers Online (Mumbai & Delhi)</span>
           </div>
         </div>
       </div>
@@ -81,10 +83,15 @@ export const RadiusCheckerPage: React.FC = () => {
         <div className="lg:col-span-7 space-y-6">
           <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <h2 className="text-base font-bold text-slate-900 font-serif-luxury">
-              Instant Radius & Coverage Verification
+              Instant Pincode & Coverage Verification
             </h2>
             <p className="text-xs text-slate-600">
-              Enter your postal code or neighborhood name (e.g. <button onClick={() => setZipInput('10021')} className="text-rose-600 underline cursor-pointer">10021</button>, <button onClick={() => setZipInput('11201')} className="text-rose-600 underline cursor-pointer">11201</button>, <button onClick={() => setZipInput('SW1A')} className="text-rose-600 underline cursor-pointer">SW1A</button>, or <button onClick={() => setZipInput('90028')} className="text-rose-600 underline cursor-pointer">90028</button>).
+              Enter your 6-digit Indian pincode or area name (e.g.{' '}
+              <button onClick={() => setZipInput('400018')} className="text-rose-600 underline cursor-pointer">400018 (Worli)</button>,{' '}
+              <button onClick={() => setZipInput('400050')} className="text-rose-600 underline cursor-pointer">400050 (Bandra)</button>,{' '}
+              <button onClick={() => setZipInput('110003')} className="text-rose-600 underline cursor-pointer">110003 (Golf Links)</button>,{' '}
+              <button onClick={() => setZipInput('560001')} className="text-rose-600 underline cursor-pointer">560001 (UB City)</button>, or{' '}
+              <button onClick={() => setZipInput('302001')} className="text-rose-600 underline cursor-pointer">302001 (Jaipur)</button>).
             </p>
 
             <form onSubmit={handleCheck} className="flex gap-2">
@@ -94,7 +101,7 @@ export const RadiusCheckerPage: React.FC = () => {
                   type="text"
                   value={zipInput}
                   onChange={(e) => setZipInput(e.target.value)}
-                  placeholder="Enter Zip / Postal Code (e.g. 10021)..."
+                  placeholder="Enter 6-digit Pincode or City (e.g. 400018, 110003)..."
                   className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:border-rose-500 font-mono"
                 />
               </div>
@@ -120,24 +127,18 @@ export const RadiusCheckerPage: React.FC = () => {
                   ) : (
                     <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
                   )}
-                  <span>{checkResult.eligible ? 'Same-Day Royal Dispatch Confirmed' : 'Scheduled White-Glove Available'}</span>
+                  <span>
+                    {checkResult.eligible
+                      ? 'Same-Day Royal Electric Courier Eligible'
+                      : 'Standard Express Air Courier Available'}
+                  </span>
                 </div>
-                <p className="leading-relaxed text-xs opacity-90">{checkResult.message}</p>
-
+                <p className="leading-relaxed">{checkResult.message}</p>
                 {checkResult.zone && (
-                  <div className="grid grid-cols-3 gap-2 pt-2 border-t border-emerald-200/60 font-mono text-[11px]">
-                    <div>
-                      <span className="text-emerald-700 block">Radius:</span>
-                      <strong>{checkResult.zone.radiusMiles} Miles</strong>
-                    </div>
-                    <div>
-                      <span className="text-emerald-700 block">Estimated Time:</span>
-                      <strong>{checkResult.zone.estimatedTime}</strong>
-                    </div>
-                    <div>
-                      <span className="text-emerald-700 block">Order Cutoff:</span>
-                      <strong>{checkResult.zone.cutoffHour}</strong>
-                    </div>
+                  <div className="pt-2 border-t border-emerald-200 flex flex-wrap gap-4 text-[11px] text-emerald-900 font-mono">
+                    <span>Target Hub: {checkResult.zone.zoneName}</span>
+                    <span>Transit Window: {checkResult.zone.estimatedTime}</span>
+                    <span>Daily Cutoff: {checkResult.zone.cutoffHour}</span>
                   </div>
                 )}
               </div>
@@ -152,7 +153,7 @@ export const RadiusCheckerPage: React.FC = () => {
                   Metropolitan Radial Radar
                 </span>
                 <h3 className="text-base font-bold text-white font-serif-luxury">
-                  Electric Fleet Perimeter ({simulatedRadius} Miles)
+                  Electric Fleet Perimeter ({simulatedRadius} km)
                 </h3>
               </div>
 
@@ -160,13 +161,13 @@ export const RadiusCheckerPage: React.FC = () => {
                 <span className="text-slate-400">Perimeter:</span>
                 <input
                   type="range"
-                  min="5"
-                  max="20"
+                  min="6"
+                  max="25"
                   value={simulatedRadius}
                   onChange={(e) => setSimulatedRadius(Number(e.target.value))}
                   className="w-24 accent-rose-500 cursor-pointer"
                 />
-                <span className="font-mono text-rose-400 w-8 text-right font-bold">{simulatedRadius}m</span>
+                <span className="font-mono text-rose-400 w-10 text-right font-bold">{simulatedRadius}km</span>
               </div>
             </div>
 
@@ -174,17 +175,17 @@ export const RadiusCheckerPage: React.FC = () => {
             <div className="relative aspect-square sm:aspect-[16/10] w-full bg-slate-900 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800">
               <svg className="w-full h-full" viewBox="0 0 400 300">
                 {/* Background Concentric Radar Rings */}
-                {/* Outer Ring 15m */}
+                {/* Outer Ring 18km */}
                 <circle cx="200" cy="150" r="120" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="4 4" />
-                <text x="200" y="25" textAnchor="middle" fill="#64748b" fontSize="8" fontFamily="monospace">15 MILES (MAX SAME-DAY RADIUS)</text>
+                <text x="200" y="25" textAnchor="middle" fill="#64748b" fontSize="8" fontFamily="monospace">18 KM (MAX SAME-DAY METRO RADIUS)</text>
 
-                {/* Middle Ring 10m */}
+                {/* Middle Ring 12km */}
                 <circle cx="200" cy="150" r="80" fill="none" stroke="#475569" strokeWidth="1" />
-                <text x="200" y="65" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="monospace">10 MILES</text>
+                <text x="200" y="65" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="monospace">12 KM</text>
 
-                {/* Inner Ring 5m Express */}
+                {/* Inner Ring 6km Express */}
                 <circle cx="200" cy="150" r="45" fill="rgba(225, 29, 72, 0.08)" stroke="#e11d48" strokeWidth="1.5" />
-                <text x="200" y="100" textAnchor="middle" fill="#f43f5e" fontSize="8" fontFamily="monospace">5 MILES (90-MIN ROYAL EXPRESS)</text>
+                <text x="200" y="100" textAnchor="middle" fill="#f43f5e" fontSize="8" fontFamily="monospace">6 KM (90-MIN ROYAL EXPRESS)</text>
 
                 {/* Dynamic sweep line */}
                 <line x1="200" y1="150" x2="310" y2="70" stroke="#38bdf8" strokeWidth="1" strokeOpacity="0.6" />
@@ -193,21 +194,21 @@ export const RadiusCheckerPage: React.FC = () => {
                 <circle cx="200" cy="150" r="8" fill="#e11d48" />
                 <circle cx="200" cy="150" r="16" fill="none" stroke="#e11d48" strokeWidth="1" className="animate-ping" />
                 <text x="200" y="172" textAnchor="middle" fill="#ffffff" fontWeight="bold" fontSize="9" fontFamily="sans-serif">
-                  Regent Atelier Central Hub
+                  South Mumbai / Central Delhi Hub
                 </text>
 
                 {/* Sample Courier Fleet Dots */}
                 <circle cx="160" cy="130" r="4" fill="#38bdf8" />
-                <text x="160" y="122" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-042</text>
+                <text x="160" y="122" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-042 (Worli)</text>
 
                 <circle cx="240" cy="120" r="4" fill="#38bdf8" />
-                <text x="240" y="112" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-018</text>
+                <text x="240" y="112" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-018 (Golf Links)</text>
 
                 <circle cx="220" cy="190" r="4" fill="#38bdf8" />
-                <text x="220" y="202" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-007</text>
+                <text x="220" y="202" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-007 (Bandra BKC)</text>
 
                 <circle cx="140" cy="170" r="4" fill="#38bdf8" />
-                <text x="140" y="182" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-011</text>
+                <text x="140" y="182" textAnchor="middle" fill="#bae6fd" fontSize="7" fontFamily="sans-serif">RC-011 (UB City)</text>
               </svg>
             </div>
           </div>
@@ -220,10 +221,10 @@ export const RadiusCheckerPage: React.FC = () => {
               Verified Metropolitan Coverage Zones
             </h3>
             <p className="text-xs text-slate-500">
-              Orders placed before daily cutoff qualify for direct electric van dispatch with garment bags on velvet hangers.
+              Orders placed before daily cutoff qualify for direct zero-emission luxury van dispatch with garments on cedar wooden hangers.
             </p>
 
-            <div className="space-y-3 divide-y divide-slate-100">
+            <div className="space-y-3 divide-y divide-slate-100 max-h-[460px] overflow-y-auto pr-1">
               {DELIVERY_ZONES.map((zone) => {
                 const isSelected = checkResult?.zone?.zipCodePrefix === zone.zipCodePrefix;
                 return (
@@ -250,7 +251,7 @@ export const RadiusCheckerPage: React.FC = () => {
 
                     <div className="grid grid-cols-3 gap-2 mt-2 text-[11px] text-slate-500 font-mono">
                       <div>
-                        <span>Radius:</span> <strong className="text-slate-800">{zone.radiusMiles} mi</strong>
+                        <span>Radius:</span> <strong className="text-slate-800">{zone.radiusKm || 15} km</strong>
                       </div>
                       <div>
                         <span>Transit:</span> <strong className="text-slate-800">{zone.estimatedTime}</strong>
@@ -275,8 +276,8 @@ export const RadiusCheckerPage: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
             <div className="absolute bottom-3 left-4 right-4 text-white text-xs">
-              <span className="font-semibold block">Central Dispatch Hub #01 — Regent Street</span>
-              <span className="text-[11px] text-slate-300">Origin point for all 2-hour electric courier routes</span>
+              <span className="font-semibold block">Flagship Atelier Hub #01 — Colaba (Mumbai) & Mehrauli (Delhi)</span>
+              <span className="text-[11px] text-slate-300">Origin points for all 90-minute electric courier dispatches</span>
             </div>
           </div>
 
@@ -286,7 +287,7 @@ export const RadiusCheckerPage: React.FC = () => {
               <span>The Royal Wardrobe Guarantee</span>
             </div>
             <p className="text-xs text-rose-900/80 leading-relaxed">
-              If your bespoke garments do not arrive within our promised radius window, we credit your delivery surcharge and gift you a complimentary bespoke silk twill pocket square.
+              If your bespoke garments do not arrive within our promised radius window, we credit your delivery surcharge and gift you a complimentary pure Italian silk twill pocket square.
             </p>
           </div>
         </div>

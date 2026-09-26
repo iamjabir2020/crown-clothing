@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Tag, Check } from 'lucide-react';
 import { CartItem } from '../types';
 import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
+import { formatINR, FREE_SHIPPING_THRESHOLD_INR, STANDARD_SHIPPING_FEE_INR } from '../utils/currency';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -32,9 +33,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const discountAmount = (subtotal * discountPercent) / 100;
   const discountedSubtotal = subtotal - discountAmount;
-  const freeShippingThreshold = 150;
+  const freeShippingThreshold = FREE_SHIPPING_THRESHOLD_INR;
   const remainingForFreeShipping = Math.max(0, freeShippingThreshold - discountedSubtotal);
-  const shippingFee = discountedSubtotal >= freeShippingThreshold || cart.length === 0 ? 0 : 25;
+  const shippingFee = discountedSubtotal >= freeShippingThreshold || cart.length === 0 ? 0 : STANDARD_SHIPPING_FEE_INR;
   const grandTotal = discountedSubtotal + shippingFee;
 
   const handleApplyPromo = (e: React.FormEvent) => {
@@ -86,12 +87,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </span>
                 ) : (
                   <span>
-                    Add <strong className="text-rose-700">${remainingForFreeShipping.toFixed(0)}</strong> more for complimentary courier
+                    Add <strong className="text-rose-700">{formatINR(remainingForFreeShipping)}</strong> more for complimentary courier
                   </span>
                 )}
               </span>
               <span className="text-[11px] font-mono text-rose-800">
-                ${discountedSubtotal.toFixed(0)} / ${freeShippingThreshold}
+                {formatINR(discountedSubtotal)} / {formatINR(freeShippingThreshold)}
               </span>
             </div>
             <div className="w-full h-1.5 bg-rose-200/60 rounded-full overflow-hidden">
@@ -181,8 +182,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </button>
                       </div>
 
-                      <span className="text-sm font-bold text-slate-900 tabular-nums">
-                        ${(item.product.price * item.quantity).toLocaleString()}
+                      <span className="text-sm font-bold text-slate-900 tabular-nums font-sans">
+                        {formatINR(item.product.price * item.quantity)}
                       </span>
                     </div>
                   </div>
@@ -202,7 +203,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     value={promoCodeInput}
                     onChange={(e) => setPromoCodeInput(e.target.value)}
                     placeholder="Privilege code (e.g. CROWN10)"
-                    className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 uppercase placeholder-normal placeholder-slate-400 focus:outline-none focus:border-rose-500"
+                    className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 uppercase placeholder-normal placeholder-slate-400 focus:outline-none focus:border-rose-500 font-mono"
                   />
                   <button
                     type="submit"
@@ -226,27 +227,27 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="space-y-1.5 text-xs text-slate-600 border-t border-slate-200 pt-3">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="tabular-nums font-medium text-slate-900">${subtotal.toLocaleString()}</span>
+                  <span className="tabular-nums font-medium text-slate-900 font-sans">{formatINR(subtotal)}</span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-emerald-600">
                     <span>Privilege Discount ({discountPercent}%)</span>
-                    <span className="tabular-nums font-medium">-${discountAmount.toFixed(0)}</span>
+                    <span className="tabular-nums font-medium font-sans">-{formatINR(discountAmount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>Royal Courier Delivery</span>
-                  <span className="tabular-nums font-medium">
+                  <span className="tabular-nums font-medium font-sans">
                     {shippingFee === 0 ? (
                       <span className="text-emerald-600 uppercase font-semibold">Complimentary</span>
                     ) : (
-                      `$${shippingFee}`
+                      formatINR(shippingFee)
                     )}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-slate-950 pt-2 border-t border-slate-200">
-                  <span>Total</span>
-                  <span className="tabular-nums text-base">${grandTotal.toLocaleString()}</span>
+                  <span>Total Amount</span>
+                  <span className="tabular-nums text-base font-sans">{formatINR(grandTotal)}</span>
                 </div>
               </div>
 
@@ -258,9 +259,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <ArrowRight className="w-4 h-4 text-rose-400" />
               </button>
 
-              <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+              <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Supports Cash on Delivery & Encrypted Checkout</span>
+                <span>UPI, Cards, NetBanking & Cash / UPI on Delivery</span>
               </div>
             </div>
           )}

@@ -52,7 +52,7 @@ export interface OrderTelemetry {
   subtotal: number;
   shippingFee: number;
   total: number;
-  paymentMethod: 'Credit Card' | 'Apple Pay' | 'Cash on Delivery';
+  paymentMethod: 'UPI (GPay / PhonePe / Paytm)' | 'Credit / Debit Card' | 'NetBanking' | 'Cash on Delivery' | 'Apple Pay' | 'Credit Card';
   createdAt: string;
   timeline: {
     status: OrderStatus;
@@ -67,7 +67,7 @@ export interface BespokeLead {
   fullName: string;
   email: string;
   phone: string;
-  serviceType: 'Bespoke Tailoring' | 'Wedding & Formal' | 'VIP Private Wardrobe' | 'Corporate Gifting';
+  serviceType: 'Bespoke Tailoring' | 'Wedding & Formal' | 'VIP Private Wardrobe' | 'Corporate Gifting' | 'Royal Bandhgala & Achkan';
   preferredDate: string;
   notes: string;
   status: 'New' | 'Contacted' | 'Consultation Scheduled' | 'Completed';
@@ -77,8 +77,10 @@ export interface BespokeLead {
 export interface DeliveryZone {
   zipCodePrefix: string;
   zoneName: string;
+  city?: string;
   sameDayEligible: boolean;
   radiusMiles: number;
+  radiusKm?: number;
   estimatedTime: string;
   cutoffHour: string;
 }

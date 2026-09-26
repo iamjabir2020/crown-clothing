@@ -40,9 +40,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="max-w-2xl space-y-6">
             {/* Subtle text kicker - zero-pill discipline */}
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-rose-400">
-              <span>Sovereign Collection</span>
+              <span>Sovereign Capsule</span>
               <span aria-hidden="true">·</span>
-              <span>Autumn / Winter 2026</span>
+              <span>Royal Wedding & Festive 2026</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-display leading-[1.1] text-balance">
@@ -50,7 +50,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-xl">
-              Architectural tailoring, superfine Scottish cashmere, and handcrafted silk designed for monarchs and discerning modern connoisseurs.
+              Architectural tailoring, pure Scottish cashmere, and handcrafted mulberry silk designed for royalty, industrialists, and discerning connoisseurs.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -78,11 +78,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <span>Pure Natural Fibres</span>
               </div>
               <div>
-                <span className="block font-bold text-white text-sm font-mono tabular-nums">Same-Day</span>
-                <span>Electric Courier Delivery</span>
+                <span className="block font-bold text-white text-sm font-mono tabular-nums">90-Minute</span>
+                <span>Electric Courier in Metros</span>
               </div>
               <div>
-                <span className="block font-bold text-white text-sm font-mono tabular-nums">Savile Row</span>
+                <span className="block font-bold text-white text-sm font-mono tabular-nums">Imperial</span>
                 <span>Atelier Standard</span>
               </div>
             </div>
@@ -92,13 +92,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-slate-800 flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2 text-slate-300">
                   <MapPin className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span className="text-[11px]">Check 2-Hour Courier Delivery to your boulevard:</span>
+                  <span className="text-[11px]">Check 90-Min Courier in Mumbai, Delhi & Metros:</span>
                 </div>
                 <button
                   onClick={() => onNavigate('radius')}
                   className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-[11px] rounded-lg transition-colors cursor-pointer whitespace-nowrap"
                 >
-                  Verify Zip Code
+                  Verify Pincode
                 </button>
               </div>
             </div>
@@ -231,26 +231,26 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white text-balance leading-tight">
-                White-Glove Doorstep Delivery in Under 2 Hours.
+                White-Glove Doorstep Delivery in Under 90 Minutes.
               </h3>
 
               <p className="text-sm text-slate-300 leading-relaxed max-w-xl">
-                Crown Clothing maintains an exclusive zero-emission electric courier fleet. Every garment travels in breathable cedar-infused wardrobe bags on velvet hangers, delivered by uniformed royal couriers with live GPS telemetry.
+                Crown Clothing maintains an exclusive zero-emission electric luxury courier fleet across Mumbai, Delhi NCR, and Bengaluru. Every garment travels in breathable cedar-infused wardrobe bags on velvet hangers, delivered by uniformed royal couriers with live GPS telemetry.
               </p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-4 border-y border-slate-800/80 text-xs">
               <div>
-                <span className="text-slate-400 block mb-1">Central Hub Radius</span>
-                <span className="text-base font-bold text-white font-mono tabular-nums">15.0 Miles</span>
+                <span className="text-slate-400 block mb-1">Metro Radius Perimeter</span>
+                <span className="text-base font-bold text-white font-mono tabular-nums">18.0 Km</span>
               </div>
               <div>
                 <span className="text-slate-400 block mb-1">Average Dispatch</span>
-                <span className="text-base font-bold text-white font-mono tabular-nums">28 Minutes</span>
+                <span className="text-base font-bold text-white font-mono tabular-nums">22 Minutes</span>
               </div>
               <div>
                 <span className="text-slate-400 block mb-1">On-Time Accuracy</span>
-                <span className="text-base font-bold text-emerald-400 font-mono tabular-nums">98.4%</span>
+                <span className="text-base font-bold text-emerald-400 font-mono tabular-nums">99.2%</span>
               </div>
             </div>
 
@@ -260,7 +260,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 className="px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <Truck className="w-4 h-4" />
-                <span>Track Live Order #CRW-88219</span>
+                <span>Track Live Order #CRW-88219 (Mumbai Fleet)</span>
               </button>
 
               <button
@@ -268,7 +268,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 className="px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold text-xs rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <MapPin className="w-4 h-4 text-sky-400" />
-                <span>Check Your Delivery Zone</span>
+                <span>Check Your Pincode Zone</span>
               </button>
             </div>
           </div>
@@ -284,7 +284,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden" />
             <div className="absolute bottom-4 right-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-lg border border-slate-800 text-xs text-slate-300">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-2 animate-ping" />
-              <span>Courier Fleet Active · 8 Vans En Route</span>
+              <span>Royal Electric Fleet Active · 8 Vans En Route in Mumbai & Delhi</span>
             </div>
           </div>
         </div>
@@ -300,18 +300,18 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <h3 className="text-3xl sm:text-4xl font-bold font-display text-slate-900 text-balance leading-tight">
-              Honoring Century-Old Tailoring Traditions.
+              Honoring Century-Old Royal Darbar & Tailoring Traditions.
             </h3>
 
             <p className="text-sm text-slate-600 leading-relaxed">
-              Every Crown garment begins with natural fibres harvested from heritage mills in Scotland, Biella, and Como. Our master cutters draft patterns by hand to celebrate anatomical poise, creating garments that mold to their wearer over decades.
+              Every Crown garment begins with natural fibres harvested from heritage mills in Biella, Como, Scotland, and Himalayan valleys. Our master cutters draft patterns by hand to celebrate anatomical poise, creating bandhgala and tuxedo silhouettes that mold to their wearer over decades.
             </p>
 
             <div className="space-y-3 pt-2">
               {[
-                { title: 'Half-Canvas & Full-Canvas Architecture', desc: 'Horsehair chest canvassing that breathes and drapes naturally without stiff synthetic fusing.' },
-                { title: 'Hand-Rolled & Pick-Stitched Lapels', desc: 'Over 2,000 delicate manual needle passes per jacket for soft roll contours.' },
-                { title: 'Bespoke Monogramming & Custom Fitting', desc: 'Private fittings in your penthouse or our Regent Street flagship salon.' },
+                { title: 'Half-Canvas & Full-Canvas Architecture', desc: 'Natural horsehair chest canvassing that breathes and drapes effortlessly in tropical and temperate climates.' },
+                { title: 'Hand-Rolled Lapels & Pick-Stitch Detailing', desc: 'Over 2,000 delicate manual needle passes per jacket for soft roll contours and crisp imperial structure.' },
+                { title: 'Bespoke Monogramming & Palace Suite Fittings', desc: 'Private fittings in your penthouse, heritage residence, or our Colaba & Mehrauli flagship salons.' },
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-3">
                   <div className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
@@ -339,7 +339,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="relative aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-slate-200">
             <img
               src={craftsmanshipImg}
-              alt="Savile Row Master Tailor at Work"
+              alt="Master Tailor at Work"
               loading="lazy"
               onError={(e) => handleImageError(e, craftsmanshipImg)}
               className="w-full h-full object-cover"
@@ -348,7 +348,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="absolute bottom-6 left-6 right-6 text-white bg-slate-900/80 backdrop-blur-md p-4 rounded-xl border border-slate-700">
               <span className="text-xs font-bold block">The Sovereign Crest Certificate</span>
               <p className="text-[11px] text-slate-300 mt-1">
-                Each overcoat and suit is individually numbered and logged in our Regent Street Atelier ledger with certificate of provenance.
+                Each overcoat, bandhgala, and bespoke suit is individually numbered and logged in our Atelier ledger with certified pedigree and provenance.
               </p>
             </div>
           </div>
@@ -370,22 +370,22 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                quote: "The cashmere overcoat has redefined my standard of tailoring. The drape is immaculate, and the white-glove courier delivery in 90 minutes was extraordinary.",
-                author: "Julian Sterling",
-                title: "Managing Director, Sterling Heritage Fund",
-                location: "Upper East Side",
+                quote: "The cashmere double-breasted overcoat and bespoke bandhgala are extraordinary. The drape is immaculate, and the white-glove courier delivery to our Worli residence in 45 minutes was exceptional.",
+                author: "Gayatri Devi Singhania",
+                title: "Industrialist & Arts Patron",
+                location: "Worli Sea Face, Mumbai",
               },
               {
-                quote: "The silk slip dress and merino cable knit are the most comfortable luxury pieces in my autumn wardrobe. Uncompromising craftsmanship and exquisite hand.",
-                author: "Lady Vivienne Montgomery",
-                title: "Chair, Sovereign Arts Foundation",
-                location: "Kensington Gardens",
+                quote: "Crown Clothing represents the highest pinnacle of tailoring in India today. The Super 150s half-canvas suit feels weightless, and the live GPS tracking gave our security staff seamless arrival coordinates.",
+                author: "Maharaj Samarjit Singh",
+                title: "Heritage Foundation Trustee",
+                location: "Golf Links, New Delhi",
               },
               {
-                quote: "The delivery tracking and radius engine gave our corporate board exact live arrival telemetry for tailored gala tuxedos. Unmatched luxury service.",
-                author: "Arthur Vance QC",
-                title: "Senior Partner, Vance & Grosvenor",
-                location: "Central Mayfair",
+                quote: "The Grade 6A mulberry silk slip dress and pure silk twill stoles are essential for royal festive season evenings. Uncompromising elegance, peerless finish, and prompt doorstep delivery.",
+                author: "Rani Priyadarshini Scindia",
+                title: "Palace Cultural Archive",
+                location: "C-Scheme, Jaipur",
               },
             ].map((t, idx) => (
               <div

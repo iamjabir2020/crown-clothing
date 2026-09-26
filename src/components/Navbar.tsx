@@ -45,11 +45,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-3">
             <span className="inline-block w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
             <span className="font-medium text-slate-200">
-              Autumn Sovereign Capsule Live
+              Royal Wedding & Festive Capsule 2026 Live
             </span>
             <span className="hidden sm:inline text-slate-500">·</span>
             <span className="hidden sm:inline text-slate-400">
-              Complimentary White-Glove Courier on orders over $150
+              Complimentary White-Glove Courier across India on orders over ₹9,999
+            </span>
+            <span className="hidden md:inline text-slate-500">·</span>
+            <span className="hidden md:inline text-amber-400 font-medium">
+              UPI & Cash on Delivery Accepted
             </span>
           </div>
 

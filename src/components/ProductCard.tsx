@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, Plus, Check } from 'lucide-react';
 import { Product } from '../types';
 import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
+import { formatINR, getMonthlyEMI } from '../utils/currency';
 
 interface ProductCardProps {
   product: Product;
@@ -121,16 +122,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             ))}
           </div>
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2">
-            {product.originalPrice && (
-              <span className="text-xs text-slate-400 line-through tabular-nums">
-                ${product.originalPrice}
+          {/* Price & EMI */}
+          <div className="flex flex-col items-end">
+            <div className="flex items-baseline gap-2">
+              {product.originalPrice && (
+                <span className="text-xs text-slate-400 line-through tabular-nums font-sans">
+                  {formatINR(product.originalPrice)}
+                </span>
+              )}
+              <span className="text-sm font-bold text-slate-950 tabular-nums font-sans">
+                {formatINR(product.price)}
+              </span>
+            </div>
+            {product.price >= 30000 && (
+              <span className="text-[10px] text-amber-700 font-medium tracking-tight">
+                EMI from {getMonthlyEMI(product.price, 6)}
               </span>
             )}
-            <span className="text-sm font-bold text-slate-950 tabular-nums">
-              ${product.price.toLocaleString()}
-            </span>
           </div>
         </div>
       </div>

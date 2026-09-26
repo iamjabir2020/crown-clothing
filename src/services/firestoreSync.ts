@@ -12,6 +12,7 @@ import { db, auth } from '../lib/firebase';
 import { Product, OrderTelemetry, BespokeLead, OrderStatus } from '../types';
 import { PRODUCTS, INITIAL_ORDERS, INITIAL_LEADS } from '../data/mockData';
 import { resolveImageUrl } from '../utils/imageResolver';
+import { normalizeToINRPrice } from '../utils/currency';
 
 // Ensure anonymous auth for security rules if needed
 let currentUser: User | null = null;
@@ -56,8 +57,18 @@ export const subscribeProducts = (onUpdate: (products: Product[]) => void) => {
         const loaded: Product[] = [];
         snapshot.forEach((d) => {
           const raw = d.data() as Product;
+          const price = normalizeToINRPrice(raw.price, raw.id);
+          const originalPrice = raw.originalPrice ? normalizeToINRPrice(raw.originalPrice, raw.id) : undefined;
+          
+          // If Firestore still held old USD values, update in background to INR
+          if (raw.price < 2000) {
+            updateDoc(doc(db, 'products', d.id), { price, originalPrice }).catch(() => {});
+          }
+
           loaded.push({
             ...raw,
+            price,
+            originalPrice,
             image: resolveImageUrl(raw.image, raw.id),
             secondaryImage: raw.secondaryImage
               ? resolveImageUrl(raw.secondaryImage, raw.id, true)
@@ -101,18 +112,29 @@ export const subscribeOrders = (onUpdate: (orders: OrderTelemetry[]) => void) =>
         const loaded: OrderTelemetry[] = [];
         snapshot.forEach((d) => {
           const raw = d.data() as OrderTelemetry;
+          const isLegacyUSD = raw.total < 5000;
+          const multiplier = isLegacyUSD ? 100 : 1;
+          const subtotal = Math.round(raw.subtotal * multiplier);
+          const total = Math.round(raw.total * multiplier);
+
           const normalizedItems = Array.isArray(raw.items)
-            ? raw.items.map((item) => ({
-                ...item,
-                product: {
-                  ...item.product,
-                  image: resolveImageUrl(item.product?.image, item.product?.id),
-                },
-              }))
+            ? raw.items.map((item) => {
+                const prodPrice = normalizeToINRPrice(item.product?.price, item.product?.id);
+                return {
+                  ...item,
+                  product: {
+                    ...item.product,
+                    price: prodPrice,
+                    image: resolveImageUrl(item.product?.image, item.product?.id),
+                  },
+                };
+              })
             : raw.items;
 
           loaded.push({
             ...raw,
+            subtotal,
+            total,
             items: normalizedItems,
           });
         });

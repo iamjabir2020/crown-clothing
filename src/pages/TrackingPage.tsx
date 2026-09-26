@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Truck, Phone, MessageSquare, MapPin, CheckCircle2, Clock, ShieldCheck, ChevronRight, Navigation, RefreshCw, X, Send } from 'lucide-react';
 import { OrderTelemetry, OrderStatus } from '../types';
 import { resolveImageUrl, handleImageError } from '../utils/imageResolver';
+import { formatINR } from '../utils/currency';
 
 interface TrackingPageProps {
   orders: OrderTelemetry[];
@@ -24,7 +25,7 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
   const [chatHistory, setChatHistory] = useState<{ sender: 'user' | 'courier'; text: string; time: string }[]>([
     {
       sender: 'courier',
-      text: 'Good day. I am Marcus, your Royal Courier. I have your garments hanging securely in the temperature-controlled cabin. Approaching in ~15 minutes.',
+      text: 'Namaste. I am Vikram, your Royal Courier. I have your garments hanging securely in our climate-controlled cabin. Approaching your residence corridor in ~15 minutes.',
       time: '1:45 PM',
     },
   ]);
@@ -51,11 +52,11 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
 
   const simulatedDistance =
     simStage === 'en_route'
-      ? '1.4 Miles away'
+      ? '2.2 km away'
       : simStage === 'approaching'
-      ? '0.3 Miles away'
+      ? '0.4 km away'
       : simStage === 'curbside'
-      ? 'At Curb / Front Entrance'
+      ? 'At Residence Gate / Porch'
       : 'Delivered';
 
   const simulatedEta =
@@ -68,7 +69,7 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
       : 'Completed at Door';
 
   const simulatedSpeed =
-    simStage === 'en_route' ? '24 mph' : simStage === 'approaching' ? '11 mph' : '0 mph';
+    simStage === 'en_route' ? '36 km/h' : simStage === 'approaching' ? '14 km/h' : '0 km/h';
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -366,11 +367,11 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
               </div>
               <div className="sm:text-right">
                 <span className="text-slate-400 block mb-0.5">Payment Guarantee:</span>
-                <span className="font-semibold text-emerald-400">
-                  {currentOrder.paymentMethod} (${currentOrder.total.toLocaleString()})
+                <span className="font-semibold text-emerald-400 font-sans">
+                  {currentOrder.paymentMethod} ({formatINR(currentOrder.total)})
                 </span>
                 <div className="text-slate-400 text-[11px]">
-                  {currentOrder.paymentMethod === 'Cash on Delivery' ? 'Cash due on handover' : 'Verified & Cleared'}
+                  {currentOrder.paymentMethod === 'Cash on Delivery' ? 'Cash or Doorstep UPI on handover' : 'Verified & Cleared'}
                 </div>
               </div>
             </div>
@@ -501,8 +502,8 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
                       Color: {item.selectedColor} · Size: {item.selectedSize} · Qty: {item.quantity}
                     </div>
                   </div>
-                  <div className="text-xs font-bold text-slate-900 tabular-nums">
-                    ${(item.product.price * item.quantity).toLocaleString()}
+                  <div className="text-xs font-bold text-slate-900 tabular-nums font-sans">
+                    {formatINR(item.product.price * item.quantity)}
                   </div>
                 </div>
               ))}
@@ -510,7 +511,7 @@ export const TrackingPage: React.FC<TrackingPageProps> = ({
 
             <div className="pt-3 border-t border-slate-200 flex justify-between text-xs font-bold text-slate-950">
               <span>Manifest Total</span>
-              <span className="text-sm font-mono">${currentOrder.total.toLocaleString()}</span>
+              <span className="text-sm font-sans">{formatINR(currentOrder.total)}</span>
             </div>
           </div>
         </div>
